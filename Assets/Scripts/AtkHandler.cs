@@ -1,18 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AtkHandler : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public int speed = 500;
+    public string layer;
+    public Transform[] shootPoints;
 
-    // Update is called once per frame
-    void Update()
+    public void Atk()
     {
-        
+        foreach (var shootPoint in shootPoints)
+        {
+            var bullet = BulletPool.instance.Rent();
+
+            bullet.layer = LayerMask.NameToLayer(layer);
+            bullet.transform.position = shootPoint.position;
+
+            if (bullet.TryGetComponent<Rigidbody>(out var rigidbody))
+            {
+                rigidbody.AddForce(shootPoint.forward * speed);
+            }
+        }
     }
 }
