@@ -10,9 +10,9 @@ public class Boos : MonoBehaviour
     public int range = 30;
     public int time = 2;
 
-    private  int _hp = 100;
+    private int _hp = 50;
     private float _atkTime;
-    private  State _state;
+    private State _state;
 
     private void Update()
     {

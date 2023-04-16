@@ -1,49 +1,49 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
 namespace EpicToonFX
 {
-    public class ETFXLoopScript : MonoBehaviour
-    {
-        public GameObject chosenEffect;
-        public float loopTimeLimit = 2.0f;
+	public class ETFXLoopScript : MonoBehaviour
+	{
+		public GameObject chosenEffect;
+		public float loopTimeLimit = 2.0f;
+	
+		[Header("Spawn without")]
+	
+		public bool spawnWithoutLight = true;
+		public bool spawnWithoutSound = true;
 
-        [Header("Spawn without")]
+		void Start ()
+		{	
+			PlayEffect();
+		}
 
-        public bool spawnWithoutLight = true;
-        public bool spawnWithoutSound = true;
+		public void PlayEffect()
+		{
+			StartCoroutine("EffectLoop");
+		}
 
-        private void Start()
-        {
-            this.PlayEffect();
-        }
+		IEnumerator EffectLoop()
+		{
+			GameObject effectPlayer = (GameObject) Instantiate(chosenEffect, transform.position, transform.rotation);
+		
+			if(spawnWithoutLight = true && effectPlayer.GetComponent<Light>())
+			{
+				effectPlayer.GetComponent<Light>().enabled = false;
+				//Destroy(gameObject.GetComponent<Light>());
 
-        public void PlayEffect()
-        {
-            this.StartCoroutine("EffectLoop");
-        }
+			}
+		
+			if(spawnWithoutSound = true && effectPlayer.GetComponent<AudioSource>())
+			{
+				effectPlayer.GetComponent<AudioSource>().enabled = false;
+				//Destroy(gameObject.GetComponent<AudioSource>());
+			}
+				
+			yield return new WaitForSeconds(loopTimeLimit);
 
-        private IEnumerator EffectLoop()
-        {
-            var effectPlayer =  Instantiate(chosenEffect, this.transform.position, this.transform.rotation);
-
-            if (spawnWithoutLight = true && effectPlayer.GetComponent<Light>())
-            {
-                effectPlayer.GetComponent<Light>().enabled = false;
-                //Destroy(gameObject.GetComponent<Light>());
-
-            }
-
-            if (spawnWithoutSound = true && effectPlayer.GetComponent<AudioSource>())
-            {
-                effectPlayer.GetComponent<AudioSource>().enabled = false;
-                //Destroy(gameObject.GetComponent<AudioSource>());
-            }
-
-            yield return new WaitForSeconds(loopTimeLimit);
-
-            Destroy(effectPlayer);
-            this.PlayEffect();
-        }
-    }
+			Destroy (effectPlayer);
+			PlayEffect();
+		}
+	}
 }

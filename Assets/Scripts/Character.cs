@@ -35,7 +35,7 @@ public class Character : MonoBehaviour
     {
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out var hit, 1 << 6))
+        if (Physics.Raycast(ray, out var hit, 1000, 1 << 6))
         {
             var target = hit.point;
             target.y = this.transform.position.y;
